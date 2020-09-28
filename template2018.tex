@@ -1,0 +1,162 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper,top=2cm,bottom=2.5cm,left=1.5cm,right=1.5cm,marginparwidth=1.75cm]{geometry}
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{listings}
+
+%% Sets page size and margins
+
+\usepackage{float}
+%% Useful packages
+\usepackage{amsmath}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{threeparttable}
+\usepackage{booktabs}
+
+\newcommand{\fr}{\rm{Fr}}
+
+
+
+\graphicspath{ {./images/} }
+% \DeclareGraphicsExtensions{.pdf,.jpg,.png}
+
+%% defined colors
+\definecolor{Blue}{rgb}{0,0,0.5}
+\definecolor{Green}{rgb}{0,0.75,0.0}
+\definecolor{LightGray}{rgb}{0.6,0.6,0.6}
+\definecolor{DarkGray}{rgb}{0.3,0.3,0.3}
+
+\title{Roll Wave Simulation Using FOU}
+\author{
+Boyuan Yu}
+\date{\today}
+
+
+\begin{document}
+\maketitle
+
+%\abstract{This is the template for writing reports for the weekly assignments. The page 5 pages. You are expected not to change the font size or style or margin width. As in certain conference 
+%submissions, if the template of your submission deviates significantly from this, your submission might incur negative points. So please follow this template and read the instructions.}
+
+
+\section{Simulation Setup}
+To generate the permanent wave, the sinusoidal disturbance is introduced from the inlet. Following Brock's setup, the simulation cases are listed in \autoref{simulation1}:
+\begin{table}[htbp]
+	\centering
+	\caption{Simulation parameters for sinusoidal inlet disturbance.}
+	\label{simulation1}
+	\begin{threeparttable}
+		\begin{tabular}{ccccccccccc}
+			\toprule
+			Test & $h_o$(m) & $S_o$ & $\fr$ & $T$ & Dist. Type & $h'/h_o$ & $X$(m) &$N$ &$\rm{Co_n}$&Boundary Condition \\
+			\midrule
+			Case 1  & 0.00798 & 0.05011 & 3.63 & 0.933 &Sinusoidal & 0.01 & 40 &12000 & 0.08&Inlet-Outlet \\
+			Case 2 & 0.00533 & 0.11953 & 5.60 & 1.015 & Sinusoidal & 0.01 & 40 &12000 &0.08&Inlet-Outlet\\
+			\bottomrule    
+		\end{tabular}
+
+	\end{threeparttable}
+\end{table}
+
+The wave coarsening happens when there exist more than one sinusoidal component in the inlet disturbance. Therefore, one inlet disturbance is set up as:
+\begin{equation}
+\label{cd}
+\begin{split}
+h=h_o[1+\epsilon(\sum_{T_i}\sin(\frac{2\pi}{T_i}  t))]
+\end{split}
+\end{equation}
+where $T_i$ is selected as $0.6,0.9,1.2,1.5,1.8$ s, namely the disturbance with 5 sinusoidal components. The setup for investigating the coarsening   is listed in \autoref{simulation2}.
+\begin{table}[htbp]
+	\centering
+	\caption{Simulation parameters for investigating coarsening effect.}
+	\label{simulation2}
+	\begin{threeparttable}
+		\begin{tabular}{ccccccccccc}
+			\toprule
+			Test & $h_o$(m) & $S_o$ & $\fr$ & $T$ & Dist. Type & $h'/h_o$ & $X$(m) &$N$&$\rm{Co_n}$&Boundary Condition \\
+			\midrule
+			Case 3  & 0.00798 & 0.05011 & 3.63 & -- &\autoref{cd} & 0.01 & 400 &40000&0.08&Inlet-Outlet\\
+			\bottomrule    
+		\end{tabular}
+
+	\end{threeparttable}
+\end{table}
+
+The case with square disturbance is listed in \autoref{simulation3} to make comparison with the sinusoidal disturbance (case 1).
+\begin{table}[htbp]
+	\centering
+	\caption{Simulation parameters for inlet square disturbance.}
+	\label{simulation3}
+	\begin{threeparttable}
+		\begin{tabular}{cccccccccccc}
+			\toprule
+			Test & $h_o$(m) & $S_o$ & $\fr$ & $T$ & Dist. Type & $h'/h_o$ & $X$(m) &$N$&$\rm{Co_n}$&Boundary Condition\\
+			\midrule
+			Case 4  & 0.00798 & 0.05011 & 3.63 & 0.933 &Square & 0.01 & 40 &12000&0.08&Inlet-Outlet\\
+			\bottomrule    
+		\end{tabular}
+
+	\end{threeparttable}
+\end{table}
+
+\section{Numerical Results}
+The convection term is discretized using first order upwind scheme (FOU) for all the cases. Courant number is selected sufficiently small to avoid numerical instability.
+\subsection{Sinusoidal Disturbance}
+The water surface profiles for case 1 and case 2 are shown in \autoref{case1t200} and \autoref{case2t200}. The comparison between Brock's results (experimental and theoretical) and numerical results are shown in \autoref{case12comp}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{case1t200}
+\caption{The water surface profile for case 1 at $t=200$s.}
+\label{case1t200}
+\end{figure}
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{case2t200}
+\caption{The water surface profile for case 2 at $t=200$s.}
+\label{case2t200}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1\textwidth]{case12comp}
+\caption{The comparison between numerical results with Brock's results (experimental and theoretical) for case 1 and 2.}
+\label{case12comp}
+\end{figure}
+
+\subsection{Coarsening Effect}
+To observe the wave coarsening phenomenon, the simulation time is sufficiently long (500 s) and channel length is also set to be sufficiently long(400 m). At the time moment $t=500$s, the surface profile at $x=50-100$m and $x=350-400$m  is shown in \autoref{case3}. It can be observed that the wave combining and overtaking occurs.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1\textwidth]{case3t500}
+\caption{The water surface profile for case 3 at $t=500$s: (a) $x=50-100$m; (b) $x=350-400$m.}
+\label{case3}
+\end{figure}
+
+\subsection{Square Disturbance}
+The water surface profile for case 4 at $t=200$s is shown in \autoref{case4}. Through the comparison between \autoref{case1t200} and \autoref{case4}, it can be concluded that the square and sinusoidal inlet disturbance with the same period generate virtually the same roll wave at the downstream.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{case4t200}
+\caption{The water surface profile for case 4 at $t=200$s.}
+\label{case4}
+\end{figure}
+
+%\begin{figure}[ht]
+%\centering
+%\includegraphics[width=.3\textwidth]{fig2.jpg}
+%\caption{This figure is an example of a figure caption taking more than one
+%  line and justified considering margins mentioned in Section~\ref{sec:figs}.}
+%\label{fig:exampleFig2}
+%\end{figure}
+
+\end{document}
