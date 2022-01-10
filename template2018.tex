@@ -19,6 +19,7 @@
 \usepackage{threeparttable}
 \usepackage{booktabs}
 \usepackage[sc]{mathpazo}
+\usepackage{physics}
 
 \newcommand{\fr}{\rm{Fr}}
 
@@ -47,6 +48,32 @@ Boyuan Yu}
 
 
 \section{Simulation Setup}
+\begin{equation}
+	\div{\pmb{u}}=0
+	\label{ns1}
+\end{equation}
+
+\begin{equation}
+	\rho(\frac{\partial \pmb{u}}{\partial t}+\pmb{u} \cdot {\grad{\pmb{u}}})=-\grad{p}+\div{(2\mu \vb{D})}+\rho \pmb{g}
+	\label{ns2}
+\end{equation}
+
+\begin{equation}
+	\frac{\partial \pmb{u}}{\partial t}+\div{(c\pmb{u})}=0
+	\label{ns3}
+\end{equation}	
+
+The volumetric average of density and viscosity:
+\begin{equation}
+	\rho = c\rho_{mud}+(1-c)\rho_{air}
+	\label{c_ave}
+\end{equation}
+\begin{equation}
+	\mu = \frac{1}{\frac{c}{\mu_{mud}}+\frac{1-c}{\mu_{air}}}
+	\label{mu_ave}
+\end{equation}
+where $c$ is the volume fraction of mud ($c\subset [0,1]$). \autoref{mu_ave} is the harmonic  average of viscosity, which works well for large density ratio.
+
 To generate the permanent wave, the sinusoidal disturbance is introduced from the inlet. Following Brock's setup, the simulation cases are listed in \autoref{simulation1}:
 \begin{table}[htbp]
 	\centering
