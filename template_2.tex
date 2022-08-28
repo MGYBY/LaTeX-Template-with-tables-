@@ -76,6 +76,20 @@ The volumetric average of density and viscosity:
 \end{equation}
 where $c$ is the volume fraction of mud ($c\subset [0,1]$). \autoref{mu_ave} is the harmonic  average of viscosity, which works well for large density ratio.
 
+SWEs:
+\begin{equation}
+	\frac{\partial h}{\partial t}+\frac{\partial q_x}{\partial x}+\frac{\partial q_y}{\partial y}=0
+	\label{pl_1}
+\end{equation}
+\begin{equation}
+	\frac{\partial q_x}{\partial t}+\frac{\partial (\beta\frac{q_x^2}{h}+\frac{1}{2}g'h^2)}{\partial x}+\frac{\partial (\beta\frac{q_xq_y}{h})}{\partial y}=gh\sin\theta-\frac{\mu_n}{\rho} (\frac{1+2n}{n }\frac{1}{h})^n(\sqrt{u^2+v^2})^{n-1}u
+	\label{pl_2}
+\end{equation}
+\begin{equation}
+	\frac{\partial q_y}{\partial t}+\frac{\partial (\beta\frac{q_yq_x}{h})}{\partial x}+\frac{\partial (\beta\frac{q_y^2}{h}+\frac{1}{2}g'h^2)}{\partial y}=-\frac{\mu_n}{\rho} (\frac{1+2n}{n  }\frac{1}{h})^n(\sqrt{u^2+v^2})^{n-1}v
+	\label{pl_3}
+\end{equation}
+
 % -----------------------------------------------------
 % The following two environments (theorem, proof) are
 % where you will enter the statement and proof of your
