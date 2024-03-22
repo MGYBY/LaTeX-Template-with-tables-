@@ -9,3 +9,14 @@ eps2pdf() {
 }
 
 pdfjoin $(eps2pdf) --outfile joined.pdf
+
+# for f in *.png
+# do
+#     img2pdf *.png -o out.pdf
+#     epstopdf "$f"
+#     echo "$(basename "$f" .eps).pdf"
+# done
+
+for f in *.png; do
+   img2pdf "$f" -o "${f%.*}".pdf
+done
